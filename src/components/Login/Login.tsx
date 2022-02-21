@@ -3,29 +3,28 @@ import { useFormik } from "formik";
 import { useDispatch, useSelector } from "react-redux";
 import { UserProfileModel } from "./state/models";
 import { Resource } from "../../redux/models";
-import { getUserProfileAction } from "./state/reducer"
-import {FC} from "react";
-interface LoginProps {
-  
-}
+import { getUserProfileAction } from "./state/reducer";
+import { FC } from "react";
+import { useNavigate } from "react-router-dom";
+interface LoginProps {}
 
-export const Login:FC<LoginProps> = () => {
+export const Login: FC<LoginProps> = () => {
+  const dispatch = useDispatch();
+  //const navigate = useNavigate();
 
-const dispatch = useDispatch();
+  const state: Resource<UserProfileModel> = useSelector<
+    any,
+    Resource<UserProfileModel>
+  >((state) => {
+    return state.user;
+  });
 
-const state: Resource<UserProfileModel> = useSelector<
-any,
-Resource<UserProfileModel>
->((state) => {
-return state.user;
-});
-
-const initialValues = {
+  const initialValues = {
     email: "",
     password: "",
   };
-  const validate = (values:any) => {
-    const errors:any = {};
+  const validate = (values: any) => {
+    const errors: any = {};
 
     if (!values.email) {
       errors.email = "Required";
@@ -41,8 +40,14 @@ const initialValues = {
     initialValues,
     validate,
     onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
-      dispatch(getUserProfileAction({ emailID:formik.values.email,password:formik.values.password }));
+      //alert(JSON.stringify(values, null, 2));
+      dispatch(
+        getUserProfileAction({
+          emailID: formik.values.email,
+          password: formik.values.password,
+        })
+      );
+      //navigate("/user", { replace: true });
     },
   });
 

@@ -5,12 +5,11 @@ import { userProfile } from "./service";
 
 export const getUserProfileAction = createAsyncThunk<
   any,
-  { emailID: string,password:string },
+  { emailID: string; password: string },
   any
->("userInfo/getById", async ({ emailID,password }, { rejectWithValue }) => {
+>("userInfo/getById", async ({ emailID, password }, { rejectWithValue }) => {
   try {
-    const data =  await userProfile(emailID,password);
-    console.log('====test', data);
+    const data = await userProfile(emailID, password);
 
     return data;
   } catch (error) {
@@ -19,42 +18,33 @@ export const getUserProfileAction = createAsyncThunk<
 });
 
 const initialState = {
-    isPending: false,
-  } as Resource<UserProfileModel>;
+  isPending: false,
+} as Resource<UserProfileModel>;
 
-  
+export const UserProfileReducers = createSlice({
+  name: "UserProfile",
+  initialState,
+  reducers: {},
 
-  export const UserProfileReducers = createSlice({
-    name: "UserProfile",
-    initialState,
-    reducers: {},
-  
-    extraReducers: (builder) => {
-      builder.addCase(getUserProfileAction.pending, (state) => {
-        return {
-          isPending: true,
-        } as Resource<UserProfileModel>;
-      });
-      builder.addCase(
-        getUserProfileAction.fulfilled,
-        (state, { payload }) => {
-          console.log(payload, "Payload");
-          return {
-            resource: { ...payload },
-          } as Resource<UserProfileModel>;
-        }
-      );
-  
-      builder.addCase(getUserProfileAction.rejected, () => {
-        return {
-          
-          errorMessage: "Some error 1",
-          //resource:{id:1,userName:"Test Name"},
-        } as Resource<UserProfileModel>;
-      });
-    },
-  });
-  export default UserProfileReducers.reducer;
-  
+  extraReducers: (builder) => {
+    builder.addCase(getUserProfileAction.pending, (state) => {
+      return {
+        isPending: true,
+      } as Resource<UserProfileModel>;
+    });
+    builder.addCase(getUserProfileAction.fulfilled, (state, { payload }) => {
+      console.log(payload, "Payload");
+      return {
+        resource: { ...payload },
+      } as Resource<UserProfileModel>;
+    });
 
-
+    builder.addCase(getUserProfileAction.rejected, () => {
+      return {
+        //errorMessage: "Some error 1",
+        resource: { id: 1, userName: "Test Name" },
+      } as Resource<UserProfileModel>;
+    });
+  },
+});
+export default UserProfileReducers.reducer;
