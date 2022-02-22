@@ -10,7 +10,7 @@ interface LoginProps {}
 
 export const Login: FC<LoginProps> = () => {
   const dispatch = useDispatch();
-  //const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const state: Resource<UserProfileModel> = useSelector<
     any,
@@ -47,7 +47,8 @@ export const Login: FC<LoginProps> = () => {
           password: formik.values.password,
         })
       );
-      //navigate("/user", { replace: true });
+
+      navigate("/user", { replace: true });
     },
   });
 
