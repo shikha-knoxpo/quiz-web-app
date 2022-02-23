@@ -2,6 +2,7 @@ import React from "react";
 import { Navigate } from "react-router-dom";
 import DashBoard from "./components/DashBoard/DashBoard";
 import Login from "./components/Login/Login";
+import NavBar from "./components/NavBar/NavBar";
 
 const routes = () => [
   {
@@ -14,7 +15,8 @@ const routes = () => [
   },
   {
     path: "user",
-    element: <DashBoard />,
+    element: <NavBar />,
+    children: [{ path: "dashboard", element: <DashBoard /> }],
   },
 ];
 

@@ -24,7 +24,14 @@ const initialState = {
 export const UserProfileReducers = createSlice({
   name: "UserProfile",
   initialState,
-  reducers: {},
+  reducers: {
+    clearAccessToken: (state, action) => {
+      localStorage.removeItem("token");
+      return {
+        isPending: false,
+      } as Resource<UserProfileModel>;
+    },
+  },
 
   extraReducers: (builder) => {
     builder.addCase(getUserProfileAction.pending, (state) => {
@@ -40,6 +47,7 @@ export const UserProfileReducers = createSlice({
     });
 
     builder.addCase(getUserProfileAction.rejected, () => {
+      localStorage.setItem("token", "LoggedIn");
       return {
         //errorMessage: "Some error 1",
         resource: { id: 1, userName: "Test Name" },
@@ -47,4 +55,6 @@ export const UserProfileReducers = createSlice({
     });
   },
 });
+export const { clearAccessToken } = UserProfileReducers.actions;
+
 export default UserProfileReducers.reducer;

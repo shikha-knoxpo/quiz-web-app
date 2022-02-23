@@ -48,7 +48,7 @@ export const Login: FC<LoginProps> = () => {
         })
       );
 
-      navigate("/user", { replace: true });
+      navigate("/user/dashboard", { replace: true });
     },
   });
 
