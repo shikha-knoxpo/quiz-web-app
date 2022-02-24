@@ -14,15 +14,12 @@ export const NavBar = () => {
 
   return (
     <>
-      <div className="relative">
-        <button
-          onClick={OnClickLogOut}
-          className={"absolute text-lg right-20 top-0"}
-        >
+      <div className="flex justify-end">
+        <button onClick={OnClickLogOut} className={"m-20 text-2xl"}>
           LogOut
         </button>
-        <Outlet />
       </div>
+      <Outlet />
     </>
   );
 };
